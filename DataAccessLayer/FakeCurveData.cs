@@ -77,9 +77,7 @@ namespace DataAccessLayer
         public CurveData UpdateCurveData(CurveData newData)
         {
             CurveData curveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
-            curveData.CurveName = newData.CurveName;
             curveData.Currency = newData.Currency;
-            curveData.CurveDate = newData.CurveDate;
             curveData.CurvePoints = newData.CurvePoints;
             return curveData;
         }

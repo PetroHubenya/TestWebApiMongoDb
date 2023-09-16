@@ -12,8 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //----------------------------------------------------------------
-builder.Services.AddTransient<ICurveDataService, CurveDataService>();
-builder.Services.AddScoped<IDataService, FakeCurveData>();
+builder.Services.AddScoped<ICurveDataService, CurveDataService>();
+builder.Services.AddSingleton<IDataService, FakeCurveData>();
 //----------------------------------------------------------------
 
 var app = builder.Build();
