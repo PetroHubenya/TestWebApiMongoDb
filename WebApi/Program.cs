@@ -21,7 +21,7 @@ builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("Mo
 
 // Select one of the following data service.
 
-builder.Services.AddSingleton<IDataService, MongoDBService>();
+// builder.Services.AddSingleton<IDataService, MongoDBService>();
 
 // builder.Services.AddSingleton<IDataService, FakeCurveDataService>();
 

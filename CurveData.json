@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "string",
+    "CurveName": "string",
+    "Currency": "string",
+    "CurveDate": 0,
+    "CurvePoints": [
+      {
+        "Date": 0,
+        "Tenor": "string",
+        "Value": 0
+      }
+    ]
+  },
+  {
+    "_id": "string",
+    "CurveName": "string",
+    "Currency": "string",
+    "CurveDate": 0,
+    "CurvePoints": [
+      {
+        "Date": 0,
+        "Tenor": "string",
+        "Value": 0
+      }
+    ]
+  }
+]
