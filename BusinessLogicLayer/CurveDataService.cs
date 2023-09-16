@@ -10,7 +10,6 @@ namespace BusinessLogicLayer
         public CurveDataService(IDataService dataService)
         {
             _dataService = dataService;
-
         }
 
         // Read all
