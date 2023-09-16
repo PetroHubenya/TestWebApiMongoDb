@@ -60,7 +60,6 @@ namespace DataAccessLayer
             return CurveDataList;
         }
 
-
         // Read CurveData by CurveName and CurveDate
         public CurveData ReadCurveData(string curveName, int curveDate)
         {
@@ -68,7 +67,7 @@ namespace DataAccessLayer
             return result;
         }
 
-        // Create CurveData by CurveName
+        // Create CurveData
         public void CreateCurveData(CurveData curveData)
         {
             CurveDataList.Add(curveData);
