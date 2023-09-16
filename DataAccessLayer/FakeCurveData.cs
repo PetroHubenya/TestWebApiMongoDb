@@ -69,14 +69,14 @@ namespace DataAccessLayer
         }
 
         // Update CurveData by CurveName
-        public List<CurveData> UpdateCurveData(CurveData newData)
+        public CurveData UpdateCurveData(CurveData newData)
         {
-            CurveData oldCurveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
-            oldCurveData.CurveName = newData.CurveName;
-            oldCurveData.Currency = newData.Currency;
-            oldCurveData.CurveDate = newData.CurveDate;
-            oldCurveData.CurvePoints = newData.CurvePoints;
-            return CurveDataList;
+            CurveData curveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
+            curveData.CurveName = newData.CurveName;
+            curveData.Currency = newData.Currency;
+            curveData.CurveDate = newData.CurveDate;
+            curveData.CurvePoints = newData.CurvePoints;
+            return curveData;
         }
 
         // Delete CurveData by CurveName and CurveDate
