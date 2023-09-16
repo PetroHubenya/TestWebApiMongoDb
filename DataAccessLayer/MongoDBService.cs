@@ -14,11 +14,22 @@ namespace DataAccessLayer
     {
         private readonly IMongoCollection<CurveData> _curveData;
 
+        string connectionString = "mongodb://localhost:27017/";
+        string databaseName = "CurveDataDB";
+        string collectionName = "CurveData";
+
         public MongoDBService(IOptions<MongoDbSettings> mongoDBSettings)
         {
             MongoClient client = new MongoClient(mongoDBSettings.Value.ConnectionURI);
             IMongoDatabase database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
             _curveData = database.GetCollection<CurveData>(mongoDBSettings.Value.CollectionName);
+        }
+
+        public MongoDBService()
+        {
+            MongoClient client = new MongoClient(connectionString);
+            IMongoDatabase database = client.GetDatabase(databaseName);
+            _curveData = database.GetCollection<CurveData>(collectionName);
         }
 
         public Task CreateCurveDataAsync(CurveData curveData)
