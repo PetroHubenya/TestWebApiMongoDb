@@ -14,9 +14,9 @@ namespace DataAccessLayer
     {
         private readonly IMongoCollection<CurveData> _curveData;
 
-        string connectionString = "mongodb://localhost:27017/";
-        string databaseName = "CurveDataDB";
-        string collectionName = "CurveData";
+        readonly string connectionString = "mongodb://localhost:27017/";
+        readonly string databaseName = "CurveDataDB";
+        readonly string collectionName = "CurveData";
 
         public MongoDBService(IOptions<MongoDbSettings> mongoDBSettings)
         {
@@ -32,29 +32,43 @@ namespace DataAccessLayer
             _curveData = database.GetCollection<CurveData>(collectionName);
         }
 
-        public Task CreateCurveDataAsync(CurveData curveData)
+        // Get all
+        public async Task<List<CurveData>> GetAllCurvesAsync()
         {
-            throw new NotImplementedException();
+            var filter = Builders<CurveData>.Filter.Empty;
+            return await _curveData.Find(filter).ToListAsync();
         }
 
-        public Task DeleteCurveDataAsync(string curveName, int curveDate)
+        // Get CurveData
+        public async Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
-            throw new NotImplementedException();
+            var filter = Builders<CurveData>.Filter.Eq(c => c.CurveName, curveName) &
+                         Builders<CurveData>.Filter.Eq(c => c.CurveDate, curveDate);
+            return await _curveData.Find(filter).FirstOrDefaultAsync();
         }
 
-        public Task<List<CurveData>> GetAllCurvesAsync()
+        // Create CurveData
+        public async Task CreateCurveDataAsync(CurveData curveData)
         {
-            throw new NotImplementedException();
+            await _curveData.InsertOneAsync(curveData);
         }
 
-        public Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
+        // Delete CurveData
+        public async Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
-            throw new NotImplementedException();
+            var filter = Builders<CurveData>.Filter.Eq(c => c.CurveName, curveName) &
+                         Builders<CurveData>.Filter.Eq(c => c.CurveDate, curveDate);
+            await _curveData.DeleteOneAsync(filter);
         }
 
-        public Task<CurveData> UpdateCurveDataAsync(CurveData newData)
+
+        // Update CurveData
+        public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
-            throw new NotImplementedException();
+            var filter = Builders<CurveData>.Filter.Eq(c => c.CurveName, newData.CurveName) &
+                         Builders<CurveData>.Filter.Eq(c => c.CurveDate, newData.CurveDate);
+            await _curveData.ReplaceOneAsync(filter, newData);
+            return await _curveData.Find(filter).FirstOrDefaultAsync();
         }
     }
 }
