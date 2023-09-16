@@ -55,13 +55,13 @@ namespace DataAccessLayer
         };
 
         // Read all.
-        public List<CurveData> Read()
+        public List<CurveData> GetAllCurves()
         {
             return CurveDataList;
         }
 
         // Read CurveData by CurveName and CurveDate
-        public CurveData ReadCurveData(string curveName, int curveDate)
+        public CurveData GetCurveData(string curveName, int curveDate)
         {
             var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
             return result;

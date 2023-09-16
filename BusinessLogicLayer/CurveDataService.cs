@@ -13,15 +13,15 @@ namespace BusinessLogicLayer
         }
 
         // Read all
-        public List<CurveData> Read()
+        public List<CurveData> GetAllCurves()
         {
-            return _dataService.Read();
+            return _dataService.GetAllCurves();
         }
 
         // Read CurveData
-        public CurveData ReadCurveData(string curveName, int curveDate)
+        public CurveData GetCurveData(string curveName, int curveDate)
         {
-            return _dataService.ReadCurveData(curveName, curveDate);
+            return _dataService.GetCurveData(curveName, curveDate);
         }
 
         // Create CurveData
