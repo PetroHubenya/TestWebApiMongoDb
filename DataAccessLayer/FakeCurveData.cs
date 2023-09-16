@@ -54,18 +54,24 @@ namespace DataAccessLayer
             }
         };
 
+        // Read all.
+        public List<CurveData> Read()
+        {
+            return CurveDataList;
+        }
+
+
         // Read CurveData by CurveName and CurveDate
-        public CurveData GetCurveData(string curveName, int curveDate)
+        public CurveData ReadCurveData(string curveName, int curveDate)
         {
             var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
             return result;
         }
 
         // Create CurveData by CurveName
-        public List<CurveData> CreateCurveData(CurveData curveData)
+        public void CreateCurveData(CurveData curveData)
         {
             CurveDataList.Add(curveData);
-            return CurveDataList;
         }
 
         // Update CurveData by CurveName
@@ -80,19 +86,10 @@ namespace DataAccessLayer
         }
 
         // Delete CurveData by CurveName and CurveDate
-        public List<CurveData> DeleteCurveData(string curveName, int curveDate)
+        public void DeleteCurveData(string curveName, int curveDate)
         {
             CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
             CurveDataList.Remove(curveData);
-            return CurveDataList;
         }
-
-
-
-
-
-
-
-
     }
 }

@@ -4,9 +4,10 @@ namespace Interfaces
 {
     public interface IDataService
     {
-        List<CurveData> CreateCurveData(CurveData curveData);
-        List<CurveData> DeleteCurveData(string curveName, int curveDate);
-        CurveData GetCurveData(string curveName, int curveDate);
-        List<CurveData> UpdateCurveData(CurveData newData);
+        void CreateCurveData(CurveData curveData);
+        void DeleteCurveData(string curveName, int curveDate);
+        List<CurveData> Read();
+        CurveData ReadCurveData(string curveName, int curveDate);
+        CurveData UpdateCurveData(CurveData newData);
     }
 }
