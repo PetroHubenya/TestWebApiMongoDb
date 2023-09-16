@@ -1,6 +1,7 @@
 using BusinessLogicLayer;
 using DataAccessLayer;
 using Interfaces;
+using Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //----------------------------------------------------------------
+
 builder.Services.AddScoped<ICurveDataService, CurveDataService>();
 builder.Services.AddSingleton<IDataService, FakeCurveData>();
+
+// Populate properties of the MongoDbSettings.cs from the configuration file.
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
+
+// Register MongoDb service.
+builder.Services.AddTransient<MongoDBService>();
+
 //----------------------------------------------------------------
 
 var app = builder.Build();
