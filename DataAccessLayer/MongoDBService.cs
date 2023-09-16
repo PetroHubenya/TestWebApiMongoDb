@@ -21,27 +21,27 @@ namespace DataAccessLayer
             _curveData = database.GetCollection<CurveData>(mongoDBSettings.Value.CollectionName);
         }
 
-        public void CreateCurveData(CurveData curveData)
+        public Task CreateCurveDataAsync(CurveData curveData)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteCurveData(string curveName, int curveDate)
+        public Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
             throw new NotImplementedException();
         }
 
-        public List<CurveData> GetAllCurves()
+        public Task<List<CurveData>> GetAllCurvesAsync()
         {
             throw new NotImplementedException();
         }
 
-        public CurveData GetCurveData(string curveName, int curveDate)
+        public Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
             throw new NotImplementedException();
         }
 
-        public CurveData UpdateCurveData(CurveData newData)
+        public Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
             throw new NotImplementedException();
         }

@@ -20,7 +20,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<CurveData>>> GetAllCurvesAsync()
         {
-            var result = _service.GetAllCurves();
+            var result = await _service.GetAllCurvesAsync();
             if (result == null)
             {
                 return NotFound("CurveData objects not found.");
@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         [HttpGet("{curveName}/{curveDate}")]
         public async Task<ActionResult<CurveData>> GetCurveDataAsync(string curveName, int curveDate)
         {
-            var result = _service.GetCurveData(curveName, curveDate);
+            var result = await _service.GetCurveDataAsync(curveName, curveDate);
             if (result == null)
             {
                 return NotFound("CurveData not found.");
@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCurveDataAsync(CurveData curveData)
         {
-            _service.CreateCurveData(curveData);
+            await _service.CreateCurveDataAsync(curveData);
             return Ok("CurveData created.");
         }
 
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult<CurveData>> UpdateCurveDataAsync(CurveData newData)
         {
-            var result = _service.UpdateCurveData(newData);
+            var result = await _service.UpdateCurveDataAsync(newData);
             if (result == null)
             {
                 return NotFound("CurveData not found.");
@@ -64,7 +64,7 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteCurveDataAsync(string curveName, int curveDate)
         {
-            _service.DeleteCurveData(curveName, curveDate);
+            await _service.DeleteCurveDataAsync(curveName, curveDate);
             return Ok("CurveData deleted.");
         }
     }

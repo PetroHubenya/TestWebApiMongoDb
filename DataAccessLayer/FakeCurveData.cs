@@ -54,39 +54,50 @@ namespace DataAccessLayer
             }
         };
 
-        // Read all.
-        public List<CurveData> GetAllCurves()
+        // Read all (asynchronous).
+        public async Task<List<CurveData>> GetAllCurvesAsync()
         {
+            await Task.Yield(); // Simulate asynchronous operation.
             return CurveDataList;
         }
 
-        // Read CurveData by CurveName and CurveDate
-        public CurveData GetCurveData(string curveName, int curveDate)
+        // Read CurveData by CurveName and CurveDate (asynchronous).
+        public async Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
+            await Task.Yield(); // Simulate asynchronous operation.
             var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
             return result;
         }
 
-        // Create CurveData
-        public void CreateCurveData(CurveData curveData)
+        // Create CurveData (asynchronous).
+        public async Task CreateCurveDataAsync(CurveData curveData)
         {
+            await Task.Yield(); // Simulate asynchronous operation.
             CurveDataList.Add(curveData);
         }
 
-        // Update CurveData by CurveName
-        public CurveData UpdateCurveData(CurveData newData)
+        // Update CurveData by CurveName (asynchronous).
+        public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
+            await Task.Yield(); // Simulate asynchronous operation.
             CurveData curveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
-            curveData.Currency = newData.Currency;
-            curveData.CurvePoints = newData.CurvePoints;
+            if (curveData != null)
+            {
+                curveData.Currency = newData.Currency;
+                curveData.CurvePoints = newData.CurvePoints;
+            }
             return curveData;
         }
 
-        // Delete CurveData by CurveName and CurveDate
-        public void DeleteCurveData(string curveName, int curveDate)
+        // Delete CurveData by CurveName and CurveDate (asynchronous).
+        public async Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
+            await Task.Yield(); // Simulate asynchronous operation.
             CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
-            CurveDataList.Remove(curveData);
+            if (curveData != null)
+            {
+                CurveDataList.Remove(curveData);
+            }
         }
     }
 }

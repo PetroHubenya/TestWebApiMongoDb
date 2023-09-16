@@ -13,34 +13,33 @@ namespace BusinessLogicLayer
         }
 
         // Read all
-        public List<CurveData> GetAllCurves()
+        public async Task<List<CurveData>> GetAllCurvesAsync()
         {
-            return _dataService.GetAllCurves();
+            return await _dataService.GetAllCurvesAsync();
         }
 
         // Read CurveData
-        public CurveData GetCurveData(string curveName, int curveDate)
+        public async Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
-            return _dataService.GetCurveData(curveName, curveDate);
+            return await _dataService.GetCurveDataAsync(curveName, curveDate);
         }
 
         // Create CurveData
-        public void CreateCurveData(CurveData curveData)
+        public async Task CreateCurveDataAsync(CurveData curveData)
         {
-            _dataService.CreateCurveData(curveData);
+            await _dataService.CreateCurveDataAsync(curveData);
         }
 
         // Update CurveData
-        public CurveData UpdateCurveData(CurveData newData)
+        public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
-            return _dataService.UpdateCurveData(newData);
+            return await _dataService.UpdateCurveDataAsync(newData);
         }
 
         // Delete CurveData
-        public void DeleteCurveData(string curveName, int curveDate)
+        public async Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
-            _dataService.DeleteCurveData(curveName, curveDate);
+            await _dataService.DeleteCurveDataAsync(curveName, curveDate);
         }
-
     }
 }

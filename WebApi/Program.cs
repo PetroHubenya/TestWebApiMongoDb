@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IDataService, FakeCurveData>();
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
 
 // Register MongoDb service.
-builder.Services.AddTransient<MongoDBService>();
+builder.Services.AddSingleton<IDataService, MongoDBService>();
 
 //----------------------------------------------------------------
 
