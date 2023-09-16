@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces
 {
-    internal interface ICurveDataService
+    public interface ICurveDataService
     {
     }
 }

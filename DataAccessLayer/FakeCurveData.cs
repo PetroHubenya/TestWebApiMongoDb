@@ -1,9 +1,10 @@
 ﻿using Models;
+using Interfaces;
 using System.Security.Cryptography;
 
 namespace DataAccessLayer
 {
-    public class FakeCurveData
+    public class FakeCurveData : IDataService
     {
         private List<CurveData> CurveDataList = new List<CurveData>()
         {
@@ -52,17 +53,17 @@ namespace DataAccessLayer
                 }
             }
         };
-        
+
         // Read CurveData by CurveName and CurveDate
         public CurveData GetCurveData(string curveName, int curveDate)
         {
             var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
             return result;
-        }        
+        }
 
         // Create CurveData by CurveName
         public List<CurveData> CreateCurveData(CurveData curveData)
-        {   
+        {
             CurveDataList.Add(curveData);
             return CurveDataList;
         }
