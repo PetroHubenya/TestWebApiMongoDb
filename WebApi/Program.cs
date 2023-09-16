@@ -23,7 +23,7 @@ builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("Mo
 
 builder.Services.AddSingleton<IDataService, MongoDBService>();
 // builder.Services.AddSingleton<IDataService, FakeCurveDataService>();
-// builder.Services.AddSingleton<IDataService, TextFileService>(); // Add FileReader parameter.
+// builder.Services.AddSingleton<IDataService, JsonFileService>(); // Add text file path as a parameter.
 
 //----------------------------------------------------------------
 
