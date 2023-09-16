@@ -32,7 +32,7 @@ namespace DataAccessLayer
             _curveData = database.GetCollection<CurveData>(collectionName);
         }
 
-        // Get all
+        // Get all CurveData
         public async Task<List<CurveData>> GetAllCurvesAsync()
         {
             var filter = Builders<CurveData>.Filter.Empty;
@@ -53,15 +53,6 @@ namespace DataAccessLayer
             await _curveData.InsertOneAsync(curveData);
         }
 
-        // Delete CurveData
-        public async Task DeleteCurveDataAsync(string curveName, int curveDate)
-        {
-            var filter = Builders<CurveData>.Filter.Eq(c => c.CurveName, curveName) &
-                         Builders<CurveData>.Filter.Eq(c => c.CurveDate, curveDate);
-            await _curveData.DeleteOneAsync(filter);
-        }
-
-
         // Update CurveData
         public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
@@ -69,6 +60,14 @@ namespace DataAccessLayer
                          Builders<CurveData>.Filter.Eq(c => c.CurveDate, newData.CurveDate);
             await _curveData.ReplaceOneAsync(filter, newData);
             return await _curveData.Find(filter).FirstOrDefaultAsync();
+        }
+
+        // Delete CurveData
+        public async Task DeleteCurveDataAsync(string curveName, int curveDate)
+        {
+            var filter = Builders<CurveData>.Filter.Eq(c => c.CurveName, curveName) &
+                         Builders<CurveData>.Filter.Eq(c => c.CurveDate, curveDate);
+            await _curveData.DeleteOneAsync(filter);
         }
     }
 }

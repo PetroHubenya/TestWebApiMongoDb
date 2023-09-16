@@ -15,13 +15,15 @@ builder.Services.AddSwaggerGen();
 //----------------------------------------------------------------
 
 builder.Services.AddScoped<ICurveDataService, CurveDataService>();
-// builder.Services.AddSingleton<IDataService, FakeCurveData>();
 
 // Populate properties of the MongoDbSettings.cs from the configuration file.
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
 
-// Register MongoDb service.
+// Select one of the following data service.
+
 builder.Services.AddSingleton<IDataService, MongoDBService>();
+// builder.Services.AddSingleton<IDataService, FakeCurveDataService>();
+// builder.Services.AddSingleton<IDataService, TextFileService>(); // Add FileReader parameter.
 
 //----------------------------------------------------------------
 

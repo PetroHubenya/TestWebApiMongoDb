@@ -4,7 +4,7 @@ using System.Security.Cryptography;
 
 namespace DataAccessLayer
 {
-    public class FakeCurveData : IDataService
+    public class FakeCurveDataService : IDataService
     {
         private List<CurveData> CurveDataList = new List<CurveData>()
         {
