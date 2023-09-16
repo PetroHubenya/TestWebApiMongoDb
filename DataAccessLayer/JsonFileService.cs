@@ -39,10 +39,14 @@ namespace DataAccessLayer
                 {
                     throw new FileNotFoundException("The JsonFile does not exist.");
                 }
-                using (StreamReader reader = new StreamReader(jsonFilePath))
+                using (StreamReader reader = new (jsonFilePath))
                 {
                     string jsonString = await reader.ReadToEndAsync();
-                    List<CurveData> curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+                    List<CurveData>? curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+                    if (curves == null)
+                    {                        
+                        throw new Exception("Failed to deserialize JSON data.");
+                    }
                     return curves;
                 }
             }
@@ -52,7 +56,7 @@ namespace DataAccessLayer
             }
         }
 
-        /* Implement Get all CurveData async method.
+        /* Implement Get CurveData by name and date async method.
          * Check whether the directory and file exists.
          * If the directory and file does not exist throw exception.
          * Using file stream open and read the file.
@@ -60,6 +64,38 @@ namespace DataAccessLayer
          * Find the CurveData by name and date.
          * Return CurveData.
          * */
+
+        public async Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
+        {
+            string jsonFilePath = JsonFilePath;
+            try
+            {
+                var jsonDirectory = Path.GetDirectoryName(jsonFilePath);
+                if (!Directory.Exists(jsonDirectory))
+                {
+                    throw new FileNotFoundException("The JsonFile does not exist.");
+                }
+                using (StreamReader reader = new(jsonFilePath))
+                {
+                    string jsonString = await reader.ReadToEndAsync();
+                    List<CurveData>? curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+                    if (curves == null)
+                    {
+                        throw new Exception("Failed to deserialize JSON data.");
+                    }
+                    CurveData? curve = curves.FirstOrDefault(c => c.CurveName == curveName && c.CurveDate == curveDate);
+                    if (curve == null)
+                    {
+                        throw new Exception("CurveData not found in the list.");
+                    }
+                    return curve;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         /* Implement Create CurveData async method.
          * Check whether the directory and file exists.
@@ -99,13 +135,6 @@ namespace DataAccessLayer
         }
 
         public Task DeleteCurveDataAsync(string curveName, int curveDate)
-        {
-            throw new NotImplementedException();
-        }
-
-        
-
-        public Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
             throw new NotImplementedException();
         }
