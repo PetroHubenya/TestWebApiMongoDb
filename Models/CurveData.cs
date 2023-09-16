@@ -8,6 +8,8 @@
 
         public string Currency { get; set; }
 
+        public int CurveDate { get; set; }
+
         public List<CurvePoint> CurvePoints { get; set; }
 
     }

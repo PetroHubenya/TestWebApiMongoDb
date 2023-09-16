@@ -12,6 +12,7 @@ namespace DataAccessLayer
                 _id = "idString1",
                 CurveName = "CurveName1",
                 Currency = "CAD",
+                CurveDate = 20230914,
                 CurvePoints = new List<CurvePoint>
                 {
                     new CurvePoint()
@@ -33,6 +34,7 @@ namespace DataAccessLayer
                 _id = "idString2",
                 CurveName = "CurveName2",
                 Currency = "CAD",
+                CurveDate = 20230915,
                 CurvePoints = new List<CurvePoint>
                 {
                     new CurvePoint()
@@ -50,50 +52,38 @@ namespace DataAccessLayer
                 }
             }
         };
-
-        // CRUD
-
-        // Read CurveData object by CurveName
-        public CurveData GetCurveData(string curveName)
+        
+        // Read CurveData by CurveName and CurveDate
+        public CurveData GetCurveData(string curveName, int curveDate)
         {
-            var result = CurveDataList.Find(n => n.CurveName == curveName);
+            var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
             return result;
+        }        
+
+        // Create CurveData by CurveName
+        public List<CurveData> CreateCurveData(CurveData curveData)
+        {   
+            CurveDataList.Add(curveData);
+            return CurveDataList;
         }
 
-        // Read CurvePoint by CurveName and Date
-        public CurvePoint GetCurvePoint(string curveName, int date)
+        // Update CurveData by CurveName
+        public List<CurveData> UpdateCurveData(CurveData newData)
         {
-            CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName);
-            CurvePoint curvePoint = curveData.CurvePoints.Find(d => d.Date == date);
-            return curvePoint;
+            CurveData oldCurveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
+            oldCurveData.CurveName = newData.CurveName;
+            oldCurveData.Currency = newData.Currency;
+            oldCurveData.CurveDate = newData.CurveDate;
+            oldCurveData.CurvePoints = newData.CurvePoints;
+            return CurveDataList;
         }
 
-        // Create CurvePoint in the CurveData by CurveName
-        public CurveData CreateCurvePoint(string curveName, CurvePoint curvePoint)
+        // Delete CurveData by CurveName and CurveDate
+        public List<CurveData> DeleteCurveData(string curveName, int curveDate)
         {
-            CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName);
-            curveData.CurvePoints.Add(curvePoint);
-            return curveData;
-        }
-
-        // Update CurvePoint in the CurveData by CurveName
-        public CurveData UpdateCurvePoint(string curveName, int date, CurvePoint point)
-        {
-            CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName);
-            CurvePoint curvePoint = curveData.CurvePoints.Find(d => d.Date == date);
-            curvePoint.Date = point.Date;
-            curvePoint.Tenor = point.Tenor;
-            curvePoint.Value = point.Value;
-            return curveData;
-        }
-
-        // Delete CurvePoint in the CurveData by Date
-        public CurveData DeleteCurvePoint(string curveName, int date)
-        {
-            CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName);
-            CurvePoint curvePoint = curveData.CurvePoints.Find(d => d.Date == date);
-            curveData.CurvePoints.Remove(curvePoint);
-            return curveData;
+            CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
+            CurveDataList.Remove(curveData);
+            return CurveDataList;
         }
 
 

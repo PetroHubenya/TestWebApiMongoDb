@@ -1,6 +1,6 @@
 ﻿namespace Interfaces
 {
-    public class Class1
+    interface IDataService
     {
 
     }
