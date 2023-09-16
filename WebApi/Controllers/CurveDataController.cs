@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         }
 
         // Read CurveData
-        [HttpGet]
+        [HttpGet("{curveName}/{curveDate}")]
         public async Task<ActionResult<CurveData>> GetCurveDataAsync(string curveName, int curveDate)
         {
             var result = _service.GetCurveData(curveName, curveDate);
