@@ -107,6 +107,43 @@ namespace DataAccessLayer
          * Write JSON to the file.
          * */
 
+        public async Task CreateCurveDataAsync(CurveData curveData)
+        {
+            string jsonFilePath = JsonFilePath;
+            try
+            {
+                var jsonDirectory = Path.GetDirectoryName(jsonFilePath);
+                if (!Directory.Exists(jsonDirectory))
+                {
+                    if (jsonDirectory == null)
+                    {
+                        throw new ArgumentException("The jsonDirectory is null.");
+                    }
+                    Directory.CreateDirectory(jsonDirectory);
+                }
+                using (StreamReader reader = new(jsonFilePath))
+                {
+                    string jsonString = await reader.ReadToEndAsync();
+                    List<CurveData>? curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+                    if (curves == null)
+                    {
+                        throw new Exception("Failed to deserialize JSON data.");
+                    }
+                    curves.Add(curveData);
+                    using (StreamWriter writer = new (jsonFilePath))
+                    {
+                        var options = new JsonSerializerOptions { WriteIndented = true };
+                        string serializedData = JsonSerializer.Serialize(curves, options);
+                        await writer.WriteAsync(serializedData);
+                    }
+                }                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         /* Implement Update CurveData method.
          * Check whether the directory and file exists.
          * If the directory and file does not exist throw exception.
@@ -119,6 +156,53 @@ namespace DataAccessLayer
          * Return CurveData by name and date.
          * */
 
+        public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
+        {
+            string jsonFilePath = JsonFilePath;
+            try
+            {
+                var jsonDirectory = Path.GetDirectoryName(jsonFilePath);
+                if (!Directory.Exists(jsonDirectory))
+                {
+                    if (jsonDirectory == null)
+                    {
+                        throw new ArgumentException("The jsonDirectory is null.");
+                    }
+                    Directory.CreateDirectory(jsonDirectory);
+                }
+                using (StreamReader reader = new(jsonFilePath))
+                {
+                    string jsonString = await reader.ReadToEndAsync();
+                    List<CurveData>? curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+                    if (curves == null)
+                    {
+                        throw new Exception("Failed to deserialize JSON data.");
+                    }
+
+                    CurveData? curve = curves.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
+                    if (curve == null)
+                    {
+                        throw new Exception("CurveData not found in the list.");
+                    }
+                    curve.Currency = newData.Currency;
+                    curve.CurvePoints = newData.CurvePoints;                    
+
+                    using (StreamWriter writer = new(jsonFilePath))
+                    {
+                        var options = new JsonSerializerOptions { WriteIndented = true };
+                        string serializedData = JsonSerializer.Serialize(curves, options);
+                        await writer.WriteAsync(serializedData);
+                    }
+
+                    return curve;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         /* Implement Delete CurveData method.
          * Check whether the directory and file exists.
          * If the directory and file does not exist throw exception.
@@ -129,19 +213,48 @@ namespace DataAccessLayer
          * Seriallize the list to JSON.
          * Write JSON to the file.
          * */
-        public Task CreateCurveDataAsync(CurveData curveData)
+        public async Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
-            throw new NotImplementedException();
-        }
+            string jsonFilePath = JsonFilePath;
+            try
+            {
+                var jsonDirectory = Path.GetDirectoryName(jsonFilePath);
+                if (!Directory.Exists(jsonDirectory))
+                {
+                    if (jsonDirectory == null)
+                    {
+                        throw new ArgumentException("The jsonDirectory is null.");
+                    }
+                    Directory.CreateDirectory(jsonDirectory);
+                }
+                using (StreamReader reader = new(jsonFilePath))
+                {
+                    string jsonString = await reader.ReadToEndAsync();
+                    List<CurveData>? curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+                    if (curves == null)
+                    {
+                        throw new Exception("Failed to deserialize JSON data.");
+                    }
 
-        public Task DeleteCurveDataAsync(string curveName, int curveDate)
-        {
-            throw new NotImplementedException();
-        }
+                    CurveData? curve = curves.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
+                    if (curve == null)
+                    {
+                        throw new Exception("CurveData not found in the list.");
+                    }
+                    curves.Remove(curve);
 
-        public Task<CurveData> UpdateCurveDataAsync(CurveData newData)
-        {
-            throw new NotImplementedException();
+                    using (StreamWriter writer = new(jsonFilePath))
+                    {
+                        var options = new JsonSerializerOptions { WriteIndented = true };
+                        string serializedData = JsonSerializer.Serialize(curves, options);
+                        await writer.WriteAsync(serializedData);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }
