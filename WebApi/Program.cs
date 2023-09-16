@@ -22,8 +22,11 @@ builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("Mo
 // Select one of the following data service.
 
 builder.Services.AddSingleton<IDataService, MongoDBService>();
+
 // builder.Services.AddSingleton<IDataService, FakeCurveDataService>();
-// builder.Services.AddSingleton<IDataService, JsonFileService>(); // Add text file path as a parameter.
+
+builder.Services.AddSingleton<IDataService, JsonFileService>(provider => 
+    new JsonFileService(builder.Configuration.GetValue<string>("JsonFileSetting:JsonFilePath")));
 
 //----------------------------------------------------------------
 

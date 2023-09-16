@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Interfaces;
+using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +8,17 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class JsonFileService // Apply IDataService interface.
+    public class JsonFileService : IDataService
     {
-        // Create property, that will store the text file path.
+
+        // Create property, that will store the json file path.
+        private string JsonFilePath { get; set; }
 
         // Initialise the text file path property through the constructor.
+        public JsonFileService(string jsonFilePath)
+        {
+            JsonFilePath = jsonFilePath;
+        }
 
         // Check whether the file exists.
 
@@ -55,5 +63,29 @@ namespace DataAccessLayer
          * Seriallize the list to JSON.
          * Write JSON to the file.
          * */
+        public Task CreateCurveDataAsync(CurveData curveData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteCurveDataAsync(string curveName, int curveDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CurveData>> GetAllCurvesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CurveData> UpdateCurveDataAsync(CurveData newData)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
