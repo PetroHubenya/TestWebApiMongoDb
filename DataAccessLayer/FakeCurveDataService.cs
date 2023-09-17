@@ -6,7 +6,7 @@ namespace DataAccessLayer
 {
     public class FakeCurveDataService : IDataService
     {
-        private List<CurveData> CurveDataList = new List<CurveData>()
+        private List<CurveData> CurveDataList = new ()
         {
             new CurveData()
             {
@@ -54,49 +54,106 @@ namespace DataAccessLayer
             }
         };
 
-        // Read all (asynchronous).
+        // Get all CurveData.
         public async Task<List<CurveData>> GetAllCurvesAsync()
         {
-            await Task.Yield(); // Simulate asynchronous operation.
+            await Task.Yield();
+
             return CurveDataList;
         }
 
-        // Read CurveData by CurveName and CurveDate (asynchronous).
+        // Get CurveData by CurveName and CurveDate.
         public async Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
-            await Task.Yield(); // Simulate asynchronous operation.
-            var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
-            return result;
+            try
+            {
+                await Task.Yield();
+
+                var result = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
+
+                if (result == null)
+                {
+                    throw new Exception("CurveData not found in the list.");
+                }
+
+                return result;
+            }
+            catch
+            {
+                throw;
+            }
         }
 
-        // Create CurveData (asynchronous).
+        // Create CurveData.
         public async Task CreateCurveDataAsync(CurveData curveData)
         {
-            await Task.Yield(); // Simulate asynchronous operation.
-            CurveDataList.Add(curveData);
+            try
+            {
+                await Task.Yield();
+
+                if (CurveDataList.Exists(c => c._id == curveData._id))
+                {
+                    throw new Exception("Object with the same id already exists. Please, provide a unique id.");
+                }
+                else
+                {
+                    CurveDataList.Add(curveData);
+                }
+            }
+            catch
+            {
+                throw;
+            }  
         }
 
         // Update CurveData by CurveName (asynchronous).
         public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
-            await Task.Yield(); // Simulate asynchronous operation.
-            CurveData curveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
-            if (curveData != null)
+            try
             {
-                curveData.Currency = newData.Currency;
-                curveData.CurvePoints = newData.CurvePoints;
+                await Task.Yield();
+
+                CurveData? curveData = CurveDataList.Find(n => n.CurveName == newData.CurveName && n.CurveDate == newData.CurveDate);
+
+                if (curveData == null)
+                {
+                    throw new Exception("CurveData not found in the list.");
+                }
+                else
+                {
+                    curveData.Currency = newData.Currency;
+                    curveData.CurvePoints = newData.CurvePoints;
+                }
+
+                return curveData;
             }
-            return curveData;
+            catch
+            {
+                throw;
+            }
         }
 
         // Delete CurveData by CurveName and CurveDate (asynchronous).
         public async Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
-            await Task.Yield(); // Simulate asynchronous operation.
-            CurveData curveData = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
-            if (curveData != null)
+            try
             {
-                CurveDataList.Remove(curveData);
+                await Task.Yield();
+
+                CurveData? curveData = CurveDataList.Find(n => n.CurveName == curveName && n.CurveDate == curveDate);
+
+                if (curveData == null)
+                {
+                    throw new Exception("CurveData not found in the list.");
+                }
+                else
+                {
+                    CurveDataList.Remove(curveData);
+                }
+            }
+            catch
+            {
+                throw;
             }
         }
     }

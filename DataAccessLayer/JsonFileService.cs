@@ -23,13 +23,7 @@ namespace DataAccessLayer
             JsonFilePath = jsonFilePath;
         }
 
-        /* Implement Get all CurveData async method.
-         * Check whether the directory and file exists.
-         * If the directory and file does not exist throw exception.
-         * Using file stream open and read the file.
-         * Deserialize JSON from the file to the list of CurveData objects asyncronously.
-         * Return the list.
-         * */
+        // Get all CurveData.
         public async Task<List<CurveData>> GetAllCurvesAsync()
         {
             string jsonFilePath = JsonFilePath;
@@ -65,15 +59,7 @@ namespace DataAccessLayer
             }
         }
 
-        /* Implement Get CurveData by name and date async method.
-         * Check whether the directory and file exists.
-         * If the directory and file does not exist throw exception.
-         * Using file stream open and read the file.
-         * Deserialize JSON from the file to the list of CurveData objects asyncronously.
-         * Find the CurveData by name and date.
-         * Return CurveData.
-         * */
-
+        // Get CurveData by CurveName and CurveDate.
         public async Task<CurveData> GetCurveDataAsync(string curveName, int curveDate)
         {
             string jsonFilePath = JsonFilePath;
@@ -86,12 +72,16 @@ namespace DataAccessLayer
                 using (StreamReader reader = new(jsonFilePath))
                 {
                     string jsonString = await reader.ReadToEndAsync();
+
                     List<CurveData>? curves = JsonSerializer.Deserialize<List<CurveData>>(jsonString);
+
                     if (curves == null)
                     {
                         throw new Exception("Failed to deserialize JSON data.");
                     }
+
                     CurveData? curve = curves.FirstOrDefault(c => c.CurveName == curveName && c.CurveDate == curveDate);
+
                     if (curve == null)
                     {
                         throw new Exception("CurveData not found in the list.");
@@ -105,16 +95,7 @@ namespace DataAccessLayer
             }
         }
 
-        /* Implement Create CurveData async method.
-         * Check whether the directory and file exists.
-         * If the directory and file does not exist create the file.
-         * Using file stream open and read the file.
-         * Deserialize JSON from the file to the list of CurveData objects asyncronously.
-         * Add CurveData to the list.
-         * Seriallize the list to JSON.
-         * Write JSON to the file.
-         * */
-
+        // Create CurveData.
         public async Task CreateCurveDataAsync(CurveData curveData)
         {
             string jsonFilePath = JsonFilePath;
@@ -154,15 +135,15 @@ namespace DataAccessLayer
                 else
                 {
                     curves.Add(curveData);
-                }
 
-                using (StreamWriter writer = new(jsonFilePath))
-                {
-                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    using (StreamWriter writer = new(jsonFilePath))
+                    {
+                        var options = new JsonSerializerOptions { WriteIndented = true };
 
-                    string serializedData = JsonSerializer.Serialize(curves, options);
+                        string serializedData = JsonSerializer.Serialize(curves, options);
 
-                    await writer.WriteAsync(serializedData);
+                        await writer.WriteAsync(serializedData);
+                    }
                 }
             }
             catch (Exception)
@@ -171,18 +152,7 @@ namespace DataAccessLayer
             }
         }
 
-        /* Implement Update CurveData method.
-         * Check whether the directory and file exists.
-         * If the directory and file does not exist throw exception.
-         * Using file stream open and read the file.
-         * Deserialize JSON from the file to the list of CurveData objects asyncronously.
-         * Find the CurveData by name and date in the list.
-         * Replace old data with new data.
-         * Seriallize the list to JSON.
-         * Write JSON to the file.
-         * Return CurveData by name and date.
-         * */
-
+        // Update CurveData by CurveName (asynchronous).
         public async Task<CurveData> UpdateCurveDataAsync(CurveData newData)
         {
             string jsonFilePath = JsonFilePath;
@@ -242,16 +212,7 @@ namespace DataAccessLayer
             }
         }
 
-        /* Implement Delete CurveData method.
-         * Check whether the directory and file exists.
-         * If the directory and file does not exist throw exception.
-         * Using file stream open and read the file.
-         * Deserialize JSON from the file to the list of CurveData objects asyncronously.
-         * Find the CurveData by name and date in the list.
-         * Delete CurveData from the list.
-         * Seriallize the list to JSON.
-         * Write JSON to the file.
-         * */
+        // Delete CurveData by CurveName and CurveDate (asynchronous).
         public async Task DeleteCurveDataAsync(string curveName, int curveDate)
         {
             string jsonFilePath = JsonFilePath;

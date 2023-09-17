@@ -19,14 +19,14 @@ builder.Services.AddScoped<ICurveDataService, CurveDataService>();
 // Populate properties of the MongoDbSettings.cs from the configuration file.
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDb"));
 
-// Select one of the following data service.
+// Select one of the following data service.---------------------
 
 // builder.Services.AddSingleton<IDataService, MongoDBService>();
 
-// builder.Services.AddSingleton<IDataService, FakeCurveDataService>();
+builder.Services.AddSingleton<IDataService, FakeCurveDataService>();
 
-builder.Services.AddSingleton<IDataService, JsonFileService>(provider => 
-    new JsonFileService(builder.Configuration.GetValue<string>("JsonFileSetting:JsonFilePath")));
+// builder.Services.AddSingleton<IDataService, JsonFileService>(provider => 
+//    new JsonFileService(builder.Configuration.GetValue<string>("JsonFileSetting:JsonFilePath")));
 
 //----------------------------------------------------------------
 
