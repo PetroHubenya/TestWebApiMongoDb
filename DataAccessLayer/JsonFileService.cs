@@ -147,7 +147,14 @@ namespace DataAccessLayer
                     }
                 }
 
-                curves.Add(curveData);
+                if (curves.Exists(c => c._id == curveData._id))
+                {
+                    throw new Exception("Object with the same id already exists. Please, provide a unique id.");   
+                }
+                else
+                {
+                    curves.Add(curveData);
+                }
 
                 using (StreamWriter writer = new(jsonFilePath))
                 {
